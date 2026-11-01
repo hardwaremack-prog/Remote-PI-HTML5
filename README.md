@@ -3,6 +3,8 @@
 See **and hear** your Raspberry Pi from any web browser — PC, phone or tablet — plus everything you need to manage it.
 Works on the **Pi 5, Pi 500, Pi 4 and Pi 400** running Raspberry Pi OS Bookworm or Trixie.
 
+![PiPortal streaming a Pi desktop with sound](screenshot.png)
+
 Regular VNC has no sound. PiPortal streams the Pi's desktop *and* whatever it's playing (YouTube, games, music, system sounds) to your browser.
 
 ## What's in it
@@ -33,6 +35,10 @@ To update later: `cd piportal && git pull && ./install.sh` (your password is kep
 It installs what it needs, asks you to pick a password, and starts PiPortal now and on every boot. At the end it prints the address, e.g. `http://192.168.1.50:6090` or `http://pi500.local:6090`.
 
 **The Pi must be logged in to its desktop** (Raspberry Pi OS auto-login is on by default) — that's where the screen and sound come from. On a Pi with no monitor, set a resolution under `sudo raspi-config` → Display Options so there's a desktop to show.
+
+## Desktop icon
+
+`start-piportal.sh` is what a Desktop icon should run: the first time it runs the installer, after that it just opens PiPortal. `Open PiPortal.html` finds PiPortal on this Pi and jumps to it (it's what the My Apps menu tile opens).
 
 ## Tips
 

@@ -99,7 +99,7 @@ def authed(request):
 async def auth_mw(request, handler):
     p = request.path
     public = (p == "/" or p.startswith("/static/") or p in ("/api/login", "/api/ping", "/api/me")
-              or p == "/favicon.svg")
+              or p in ("/favicon.svg", "/piportal.js"))
     if not public and not authed(request):
         return web.json_response({"error": "login required"}, status=401)
     resp = await handler(request)
@@ -144,6 +144,13 @@ async def h_ping(request):
     return web.json_response({"app": "piportal", "version": VERSION, "hostname": socket.gethostname(),
                               "model": pi_model(), "uptime": uptime_s()},
                              headers={"Access-Control-Allow-Origin": "*"})
+
+
+async def h_probe(request):
+    # "Open PiPortal.html" loads this as a <script> to find which port PiPortal is on.
+    js = f"window.__piportal=(window.__piportal||[]).concat([{CFG['port']}]);"
+    return web.Response(text=js, content_type="application/javascript",
+                        headers={"Cache-Control": "no-store"})
 
 
 # --------------------------------------------------------------------------- helpers
@@ -764,6 +771,7 @@ def make_app():
     r.add_post("/api/logout", h_logout)
     r.add_get("/api/me", h_me)
     r.add_get("/api/ping", h_ping)
+    r.add_get("/piportal.js", h_probe)
     r.add_get("/api/info", h_info)
     r.add_get("/api/stats", h_stats)
     r.add_get("/api/processes", h_processes)
