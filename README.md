@@ -20,13 +20,15 @@ Regular VNC has no sound. PiPortal streams the Pi's desktop *and* whatever it's 
 
 ## Install (on each Pi)
 
-Copy the `piportal` folder to the Pi, then in a terminal:
+In a terminal on the Pi:
 
 ```bash
+git clone https://github.com/hardwaremack-prog/piportal.git
 cd piportal
-chmod +x install.sh
 ./install.sh            # or ./install.sh --https
 ```
+
+To update later: `cd piportal && git pull && ./install.sh` (your password is kept).
 
 It installs what it needs, asks you to pick a password, and starts PiPortal now and on every boot. At the end it prints the address, e.g. `http://192.168.1.50:6090` or `http://pi500.local:6090`.
 
